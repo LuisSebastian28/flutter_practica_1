@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:guide_form/forms.dart';
-import 'package:guide_form/register.dart';
 
 void main() {
   runApp(const MyForms());
