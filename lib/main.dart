@@ -3,7 +3,7 @@ import 'package:guide_form/forms.dart';
 import 'package:guide_form/preferencies.dart';
 
 void main() {
-  runApp(const _MyAppState());
+  runApp(const MyForms());
 }
 
 class MainApp extends StatelessWidget {
