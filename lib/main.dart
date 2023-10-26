@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:guide_form/forms.dart';
-import 'package:guide_form/preferencies.dart';
 
 void main() {
-  runApp(const MyForms());
+  runApp(const MyApp());
 }
 
 class MainApp extends StatelessWidget {
