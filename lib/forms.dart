@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:guide_form/movies.dart';
+import 'package:local_auth/local_auth.dart';
 
 class AuthState {
   final bool isAuthenticated;
@@ -48,7 +49,25 @@ class _MyForms extends State<MyForms> {
   GlobalKey<FormState> _signInKey = GlobalKey();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  final LocalAuthentication localAuth = LocalAuthentication();
 
+  Future<void> _authenticateWithBiometrics() async {
+    try {
+      final isBiometricAvailable = await localAuth.canCheckBiometrics;
+      if (isBiometricAvailable) {
+        final didAuthenticate = await localAuth.authenticate(
+          localizedReason: 'Autenticación requerida para continuar.',
+          //useErrorDialogs: true,
+          //stickyAuth: true,
+        );
+        if (didAuthenticate) {
+          context.read<AuthCubit>().authenticateUser(context);
+        }
+      }
+    } catch (e) {
+      print('Error de autenticación biométrica: $e');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -113,6 +132,12 @@ class _MyForms extends State<MyForms> {
                         context.read<AuthCubit>().logout();
                       },
                       child: const Text("Cerrar sesión"),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        _authenticateWithBiometrics();
+                      },
+                      child: const Text("Autenticación con Huella"),
                     ),
                 ],
               ),
