@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:guide_form/forms.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyForms());
 }
 
 class MainApp extends StatelessWidget {
